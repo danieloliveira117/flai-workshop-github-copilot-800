@@ -1,38 +1,494 @@
+/* =========================================
+   OctoFit Tracker – Global Custom Styles
+   Complements Bootstrap 5
+   ========================================= */
+
+/* ----- Matrix colour palette ----- */
+:root {
+  --matrix-green:       #00ff41;
+  --matrix-dim-green:   #008f11;
+  --matrix-dark-green:  #003b00;
+  --matrix-bg:          #0a0a0a;
+  --matrix-card-bg:     #0d1a0d;
+  --matrix-glow:        0 0 8px #00ff41, 0 0 20px rgba(0, 255, 65, 0.4);
+  --matrix-glow-subtle: 0 0 5px rgba(0, 255, 65, 0.3);
+  --card-radius:        0.3rem;
+  --transition-speed:   0.2s;
+}
+
+/* ----- Base ----- */
+body {
+  background-color: var(--matrix-bg) !important;
+  color: var(--matrix-green) !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+a {
+  color: var(--matrix-green);
+}
+
+a:hover {
+  color: #fff;
+  text-shadow: var(--matrix-glow);
+}
+
 .App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.App > .container {
+  flex: 1;
+}
+
+/* ----- Navbar ----- */
+.navbar {
+  background-color: #000 !important;
+  border-bottom: 1px solid var(--matrix-dim-green);
+  box-shadow: 0 2px 16px rgba(0, 255, 65, 0.2);
+}
+
+.navbar-brand span {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-size: 1.2rem;
+  color: var(--matrix-green) !important;
+  text-shadow: var(--matrix-glow);
+  text-transform: uppercase;
+}
+
+.navbar-brand img {
+  filter: hue-rotate(90deg) saturate(3) brightness(1.2);
+}
+
+.navbar .nav-link {
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.2rem;
+  color: var(--matrix-dim-green) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: color var(--transition-speed), text-shadow var(--transition-speed), background-color var(--transition-speed);
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: var(--matrix-green) !important;
+  text-shadow: var(--matrix-glow);
+  background-color: rgba(0, 255, 65, 0.08);
+}
+
+.navbar-toggler {
+  border-color: var(--matrix-dim-green) !important;
+}
+
+/* ----- Page Section Headers ----- */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--matrix-dim-green);
+}
+
+.page-header h2 {
+  margin: 0;
+  font-weight: 700;
+  color: var(--matrix-green);
+  text-shadow: var(--matrix-glow);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-header h2:hover {
+  animation: glitch 0.4s linear;
+}
+
+/* ----- Cards ----- */
+.card {
+  background-color: var(--matrix-card-bg) !important;
+  border: 1px solid var(--matrix-dim-green) !important;
+  border-radius: var(--card-radius) !important;
+  color: var(--matrix-green) !important;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed), border-color var(--transition-speed);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--matrix-green) !important;
+  box-shadow: var(--matrix-glow) !important;
+}
+
+.card-header {
+  background-color: #0a1a0a !important;
+  border-bottom: 1px solid var(--matrix-dim-green) !important;
+  border-radius: var(--card-radius) var(--card-radius) 0 0 !important;
+  font-weight: 600;
+  color: var(--matrix-green) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-title, .card-text {
+  color: var(--matrix-green) !important;
+}
+
+.text-muted {
+  color: var(--matrix-dim-green) !important;
+}
+
+/* ----- Tables ----- */
+/* Override Bootstrap table CSS variables so striped/hover work on dark bg */
+.table {
+  color: var(--matrix-green) !important;
+  border-color: var(--matrix-dark-green) !important;
+  --bs-table-bg:            #0d1a0d;
+  --bs-table-striped-bg:    #0a150a;
+  --bs-table-hover-bg:      #0d200d;
+  --bs-table-active-bg:     #0d200d;
+  --bs-table-color:         #00ff41;
+  --bs-table-striped-color: #00ff41;
+  --bs-table-hover-color:   #00ff41;
+  --bs-table-border-color:  #003b00;
+}
+
+.table thead th {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  background-color: #050f05 !important;
+  color: var(--matrix-green) !important;
+  border-color: var(--matrix-dim-green) !important;
+  text-shadow: var(--matrix-glow-subtle);
+}
+
+.table tbody tr {
+  background-color: var(--matrix-card-bg) !important;
+  border-color: var(--matrix-dark-green) !important;
+}
+
+.table tbody tr:hover {
+  background-color: #0d200d !important;
+  color: var(--matrix-green) !important;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  border-color: var(--matrix-dark-green) !important;
+  color: var(--matrix-green) !important;
+}
+
+/* Force stripe and hover rows dark with strong contrast */
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-color-type: var(--matrix-green);
+  --bs-table-bg-type:    #040b04;
+  color: var(--matrix-green) !important;
+  background-color: #040b04 !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  color: var(--matrix-green) !important;
+  background-color: #0f1f0f !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+  color: var(--matrix-green) !important;
+  background-color: #0d200d !important;
+}
+
+/* table-dark header override */
+.table-dark {
+  --bs-table-bg:           #050f05 !important;
+  --bs-table-color:        #00ff41 !important;
+  --bs-table-border-color: #008f11 !important;
+  background-color: #050f05 !important;
+  color: var(--matrix-green) !important;
+}
+
+/* table-secondary header override */
+.table-secondary,
+thead.table-secondary > tr > th,
+.table > thead.table-secondary {
+  --bs-table-bg:    #050f05 !important;
+  --bs-table-color: #00ff41 !important;
+  background-color: #050f05 !important;
+  color: var(--matrix-green) !important;
+  border-color: var(--matrix-dim-green) !important;
+}
+
+.table-wrapper {
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  border: 1px solid var(--matrix-dim-green);
+  box-shadow: var(--matrix-glow-subtle);
+}
+
+/* ----- Buttons ----- */
+.btn-primary {
+  background-color: transparent !important;
+  border: 1px solid var(--matrix-green) !important;
+  color: var(--matrix-green) !important;
+  font-family: 'Courier New', monospace !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: box-shadow var(--transition-speed), background-color var(--transition-speed);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: rgba(0, 255, 65, 0.12) !important;
+  box-shadow: var(--matrix-glow) !important;
+  color: var(--matrix-green) !important;
+}
+
+.btn-outline-primary {
+  border-color: var(--matrix-green) !important;
+  color: var(--matrix-green) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'Courier New', monospace !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: rgba(0, 255, 65, 0.12) !important;
+  box-shadow: var(--matrix-glow) !important;
+  color: var(--matrix-green) !important;
+}
+
+.btn-outline-light {
+  border-color: var(--matrix-dim-green) !important;
+  color: var(--matrix-dim-green) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'Courier New', monospace !important;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(0, 255, 65, 0.1) !important;
+  color: var(--matrix-green) !important;
+  border-color: var(--matrix-green) !important;
+  box-shadow: var(--matrix-glow) !important;
+}
+
+/* ----- Workout card table rows - explicit alternating contrast ----- */
+.card-body .table tbody tr:nth-child(odd) > td {
+  background-color: #040c04 !important;
+  color: var(--matrix-green) !important;
+}
+
+.card-body .table tbody tr:nth-child(even) > td {
+  background-color: #0e1f0e !important;
+  color: var(--matrix-green) !important;
+}
+
+.card-body .table thead > tr > th {
+  background-color: #020802 !important;
+  color: var(--matrix-green) !important;
+  border-bottom: 1px solid var(--matrix-dim-green) !important;
+  text-shadow: var(--matrix-glow-subtle);
+}
+
+/* ----- Home page hero ----- */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--matrix-dim-green);
+  border-radius: var(--card-radius);
+  padding: 3rem 2rem;
+  color: var(--matrix-green);
+  margin-bottom: 2rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.hero-section canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.18;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.hero-section .hero-content {
+  position: relative;
+  z-index: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.hero-section img {
+  filter: hue-rotate(90deg) saturate(3) brightness(1.5) drop-shadow(0 0 12px #00ff41);
 }
 
-.App-link {
-  color: #61dafb;
+.hero-section h1 {
+  font-weight: 800;
+  color: var(--matrix-green);
+  text-shadow: var(--matrix-glow);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hero-section .lead {
+  color: var(--matrix-dim-green);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
 }
+
+/* Home feature cards */
+.feature-card {
+  border: 1px solid var(--matrix-dim-green) !important;
+  background-color: var(--matrix-card-bg) !important;
+  transition: border-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.feature-card:hover {
+  border-color: var(--matrix-green) !important;
+  transform: translateY(-4px);
+  box-shadow: var(--matrix-glow) !important;
+}
+
+.feature-card .feature-icon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: grayscale(1) brightness(2) sepia(1) hue-rotate(85deg);
+}
+
+/* ----- Bootstrap badge/alert Matrix overrides ----- */
+.badge.bg-primary,
+.badge.bg-secondary,
+.badge.bg-success,
+.badge.bg-info {
+  background-color: transparent !important;
+  border: 1px solid var(--matrix-dim-green) !important;
+  color: var(--matrix-green) !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+.alert-danger {
+  background-color: #1a0000 !important;
+  border-color: #660000 !important;
+  color: #ff4444 !important;
+}
+
+.alert-success {
+  background-color: #001a00 !important;
+  border-color: var(--matrix-dim-green) !important;
+  color: var(--matrix-green) !important;
+}
+
+/* Generic link color inside tables */
+.table a,
+.table a:hover {
+  color: var(--matrix-green) !important;
+  text-decoration: none;
+}
+
+/* ----- Leaderboard podium rows ----- */
+.rank-gold   { background-color: #1a1500 !important; border-left: 3px solid #ffd700 !important; }
+.rank-silver { background-color: #111 !important;    border-left: 3px solid #aaa !important; }
+.rank-bronze { background-color: #110800 !important; border-left: 3px solid #cd7f32 !important; }
+
+/* ----- Badges ----- */
+.activity-badge {
+  font-size: 0.75rem;
+  padding: 0.3em 0.65em;
+  border-radius: 0.2rem;
+  font-weight: 600;
+  background-color: transparent !important;
+  border: 1px solid var(--matrix-dim-green);
+  color: var(--matrix-green) !important;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.04em;
+}
+
+.badge {
+  background-color: transparent !important;
+  border: 1px solid var(--matrix-dim-green) !important;
+  color: var(--matrix-green) !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+/* ----- Empty state ----- */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--matrix-dim-green);
+}
+
+.empty-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  filter: grayscale(1) brightness(2) sepia(1) hue-rotate(85deg);
+}
+
+/* ----- Footer ----- */
+footer {
+  background-color: #000 !important;
+  font-size: 0.875rem;
+  border-top: 1px solid var(--matrix-dim-green);
+  color: var(--matrix-dim-green) !important;
+  letter-spacing: 0.06em;
+}
+
+footer p {
+  color: var(--matrix-dim-green) !important;
+}
+
+/* ----- Spinner ----- */
+.spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-width: 0.3em;
+  color: var(--matrix-green) !important;
+}
+
+/* ----- Bootstrap overrides ----- */
+.bg-dark {
+  background-color: #000 !important;
+}
+
+.text-light {
+  color: var(--matrix-dim-green) !important;
+}
+
+.shadow-sm {
+  box-shadow: var(--matrix-glow-subtle) !important;
+}
+
+/* ----- Scrollbar ----- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--matrix-dim-green);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--matrix-green);
+}
+
+/* ----- Utility ----- */
+.shadow-card {
+  box-shadow: var(--matrix-glow-subtle);
+}
+
+/* ----- Glitch animation ----- */
+@keyframes glitch {
+  0%   { text-shadow: 2px 0 var(--matrix-green), -2px 0 #0ff; }
+  20%  { text-shadow: -2px 0 var(--matrix-green), 2px 0 #0ff; }
+  40%  { text-shadow: 2px 2px var(--matrix-green), -2px -2px #0ff; }
+  60%  { text-shadow: -2px 2px var(--matrix-green), 2px -2px #0ff; }
+  80%  { text-shadow: var(--matrix-glow); }
+  100% { text-shadow: var(--matrix-glow); }
+}
+
