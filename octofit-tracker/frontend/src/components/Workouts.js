@@ -7,12 +7,20 @@ function Workouts() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/workouts/`)
+    const endpoint = `${API_BASE_URL}/api/workouts/`;
+    console.log('Workouts: fetching from', endpoint);
+    fetch(endpoint)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch workouts');
         return res.json();
       })
-      .then(data => { setWorkouts(data); setLoading(false); })
+      .then(data => {
+        console.log('Workouts: fetched data', data);
+        // Support both paginated DRF responses and plain arrays
+        const items = Array.isArray(data) ? data : (data.results || []);
+        setWorkouts(items);
+        setLoading(false);
+      })
       .catch(err => { setError(err.message); setLoading(false); });
   }, []);
 

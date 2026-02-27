@@ -7,14 +7,19 @@ function Leaderboard() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/leaderboard/`)
+    const endpoint = `${API_BASE_URL}/api/leaderboard/`;
+    console.log('Leaderboard: fetching from', endpoint);
+    fetch(endpoint)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch leaderboard');
         return res.json();
       })
       .then(data => {
+        console.log('Leaderboard: fetched data', data);
+        // Support both paginated DRF responses and plain arrays
+        const items = Array.isArray(data) ? data : (data.results || []);
         // Sort by score descending
-        const sorted = [...data].sort((a, b) => b.score - a.score);
+        const sorted = [...items].sort((a, b) => b.score - a.score);
         setEntries(sorted);
         setLoading(false);
       })

@@ -7,12 +7,20 @@ function Teams() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/teams/`)
+    const endpoint = `${API_BASE_URL}/api/teams/`;
+    console.log('Teams: fetching from', endpoint);
+    fetch(endpoint)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch teams');
         return res.json();
       })
-      .then(data => { setTeams(data); setLoading(false); })
+      .then(data => {
+        console.log('Teams: fetched data', data);
+        // Support both paginated DRF responses and plain arrays
+        const items = Array.isArray(data) ? data : (data.results || []);
+        setTeams(items);
+        setLoading(false);
+      })
       .catch(err => { setError(err.message); setLoading(false); });
   }, []);
 

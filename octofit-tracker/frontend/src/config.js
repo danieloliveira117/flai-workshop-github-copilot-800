@@ -1,13 +1,9 @@
 // Determine the API base URL based on environment
-const getApiBaseUrl = () => {
-  const hostname = window.location.hostname;
-  // Running in a GitHub Codespace
-  if (hostname.includes('.app.github.dev')) {
-    const codespaceName = hostname.split('-3000.')[0];
-    return `https://${codespaceName}-8000.app.github.dev`;
-  }
-  // Local development
-  return 'http://localhost:8000';
-};
+// Uses REACT_APP_CODESPACE_NAME env var (set automatically in GitHub Codespaces)
+const CODESPACE_NAME = process.env.REACT_APP_CODESPACE_NAME;
 
-export const API_BASE_URL = getApiBaseUrl();
+export const API_BASE_URL = CODESPACE_NAME
+  ? `https://${CODESPACE_NAME}-8000.app.github.dev`
+  : 'http://localhost:8000';
+
+console.log('OctoFit API_BASE_URL:', API_BASE_URL);

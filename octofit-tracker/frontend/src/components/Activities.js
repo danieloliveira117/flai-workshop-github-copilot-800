@@ -7,12 +7,20 @@ function Activities() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/activities/`)
+    const endpoint = `${API_BASE_URL}/api/activities/`;
+    console.log('Activities: fetching from', endpoint);
+    fetch(endpoint)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch activities');
         return res.json();
       })
-      .then(data => { setActivities(data); setLoading(false); })
+      .then(data => {
+        console.log('Activities: fetched data', data);
+        // Support both paginated DRF responses and plain arrays
+        const items = Array.isArray(data) ? data : (data.results || []);
+        setActivities(items);
+        setLoading(false);
+      })
       .catch(err => { setError(err.message); setLoading(false); });
   }, []);
 

@@ -7,12 +7,20 @@ function Users() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/users/`)
+    const endpoint = `${API_BASE_URL}/api/users/`;
+    console.log('Users: fetching from', endpoint);
+    fetch(endpoint)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch users');
         return res.json();
       })
-      .then(data => { setUsers(data); setLoading(false); })
+      .then(data => {
+        console.log('Users: fetched data', data);
+        // Support both paginated DRF responses and plain arrays
+        const items = Array.isArray(data) ? data : (data.results || []);
+        setUsers(items);
+        setLoading(false);
+      })
       .catch(err => { setError(err.message); setLoading(false); });
   }, []);
 
